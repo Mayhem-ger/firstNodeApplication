@@ -1,14 +1,14 @@
 var Profile = require("./profile.js");
+var renderer = require("./renderer.js")
 
 
 //Handle HTTP route GET / and POST / i.e. Home
 function home(req, res) {
     if (req.url === "/") {
-        res.statusCode = 200;
-        res.setHeader('Content-Type', 'text/plain');
-        res.write("Header\n")
-        res.write("Search\n") 
-        res.end("Footer\n") 
+        res.writeHead(200, {'Content-Type': 'text/plain'});
+        renderer.view("header",{},res)
+        renderer.view("search",{},res)
+        renderer.view("footer",{},res)
     }
 }
 
@@ -25,7 +25,7 @@ function user(req,res) {
     if (username.length > 0) {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'text/plain');
-        res.write("Header\n")
+        renderer.view("header",{},res)
         
         //get json from Treehousse
         var studentProfile = new Profile(username);
@@ -41,15 +41,16 @@ function user(req,res) {
                 javascript: profileJSON.points.JavaScript
             }
             //Simple response
-            res.write(values.username+ " has " + values.badges + " and " + values.javascript + " points in JavaScript" +"\n") 
-            res.end("Footer\n") 
+            renderer.view("profile",{},res) 
+            renderer.view("footer",{},res)
         });
 
         // on error
         studentProfile.on("error", function(e){
             //show the error
-            res.write(e.message + "\n");
-            res.end("Footer\n") 
+            renderer.view("error",{errorMessage: error.message},res);
+            renderer.view("search",{},res) 
+            renderer.view("footer",{},res) 
         });
 
     }
