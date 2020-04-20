@@ -9,6 +9,7 @@ function home(req, res) {
         renderer.view("header",{},res)
         renderer.view("search",{},res)
         renderer.view("footer",{},res)
+        res.end();
     }
 }
 
@@ -43,14 +44,16 @@ function user(req,res) {
             //Simple response
             renderer.view("profile",{},res) 
             renderer.view("footer",{},res)
+            res.end();
         });
 
         // on error
         studentProfile.on("error", function(e){
             //show the error
-            renderer.view("error",{errorMessage: error.message},res);
+            renderer.view("error",{},res);
             renderer.view("search",{},res) 
-            renderer.view("footer",{},res) 
+            renderer.view("footer",{},res)
+            res.end();
         });
 
     }

@@ -6,8 +6,6 @@ function view(templateName, values, res) {
     var fileContents = fs.readFileSync('./views/' + templateName + ".html");
     //insert values in to the content
     res.write(fileContents);
-    console.log(fileContents)
-
 
    
 }
