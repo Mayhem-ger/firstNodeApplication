@@ -1,18 +1,18 @@
-//Problem: We need a simple way to look at a users badge counta nd javascript points from a Webbrowser.
-//Solution: Use Node.js to perform the profile look ups and serve our template via HTTP
+var router = require("./router.js");
+//Problem: We need a simple way to look at a user's badge count and JavaScript point from a web browser
+//Solution: Use Node.js to perform the profile look ups and server our template via HTTP
+var host = '127.0.0.1:'
+var port = "3000"
+//Create a web server
+var http = require('http');
+http.createServer(function (request, response) {
+  router.home(request, response);
+  router.user(request, response);
+}).listen(3000);
+console.log(`Server running at ${host}${port}`);
 
-var router = require("./router.js")
 
-// Create a web server
 
-const http = require('http');
 
-const hostname = '127.0.0.1';
-const port = 3000;
 
-http.createServer((req, res) => {
-  router.home(req, res);
-  router.user(req, res);
-}).listen(port);
-console.log(`Server running at http://${hostname}:${port}/`);
 
